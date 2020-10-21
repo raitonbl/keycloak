@@ -1,0 +1,4 @@
+com.raitonbl.keycloak.authentication.UnlockSmsTokenForm
+com.raitonbl.keycloak.authentication.ResetPasswordChooseUser
+com.raitonbl.keycloak.authentication.SendPasswordNotification
+com.raitonbl.keycloak.authentication.UsernameAndPasswordFormFactory

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.raitonbl</groupId>
+    <artifactId>keycloak</artifactId>
+    <packaging>jar</packaging>
+    <version>1.2.0-RELEASE</version>
+
+    <name>com.raitonbl.keycloak</name>
+    <url>https://github.com/Delfimarime/keycloak</url>
+
+    <organization>
+        <name>RaitonBL</name>
+        <url>https://raitonbl.com</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>RaitonBL</id>
+            <name>Delfim Marime</name>
+            <email>Delfimarime@raitonbl.com</email>
+        </developer>
+    </developers>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/Delfimarime/keycloak</url>
+        </repository>
+    </distributionManagement>
+
+    <properties>
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <keycloak.version>11.0.2</keycloak.version>
+        <apache.commons.version>3.11</apache.commons.version>
+        <jboss.logging.version>3.4.1.Final</jboss.logging.version>
+        <microprofile.config.version>1.4</microprofile.config.version>
+
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>${jboss.logging.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-core</artifactId>
+            <version>${keycloak.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-services</artifactId>
+            <version>${keycloak.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-server-spi</artifactId>
+            <version>${keycloak.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-server-spi-private</artifactId>
+            <version>${keycloak.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-model-jpa</artifactId>
+            <version>${keycloak.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache.commons.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.drapostolos/type-parser -->
+        <dependency>
+            <groupId>com.github.drapostolos</groupId>
+            <artifactId>type-parser</artifactId>
+            <version>0.7.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.raitonbl</groupId>
+            <artifactId>keycloak.keygen</artifactId>
+            <version>1.1.0-RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.raitonbl</groupId>
+            <artifactId>keycloak.template</artifactId>
+            <version>1.1.0-RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.raitonbl</groupId>
+            <artifactId>keycloak.channel</artifactId>
+            <version>1.0.0-RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.raitonbl</groupId>
+            <artifactId>keycloak.captcha</artifactId>
+            <version>1.0.0-RELEASE</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>com.raitonbl.keycloak</finalName>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <shadedArtifactAttached>false</shadedArtifactAttached>
+                    <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <artifactSet>
+                        <includes>
+                            <!--
+                            <inclide>com.raitonbl:keycloak.smsc</inclide>
+                            <inclide>com.raitonbl:keycloak.keygen</inclide>
+                            <include>com.raitonbl:keycloak.captcha</include>
+                            -->
+                            <include>org.apache.commons:commons-lang3</include>
+                            <include>com.github.drapostolos:type-parser</include>
+                        </includes>
+                    </artifactSet>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                                <exclude>META-INF/license/**</exclude>
+                                <exclude>META-INF/*</exclude>
+                                <exclude>META-INF/maven/**</exclude>
+                                <exclude>LICENSE</exclude>
+                                <exclude>NOTICE</exclude>
+                                <exclude>/*.txt</exclude>
+                                <exclude>build.properties</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.7.0.1746</version>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+</project>
